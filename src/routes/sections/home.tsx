@@ -12,7 +12,7 @@ import { AuthGuard } from 'src/auth/guard'
 
 // ----------------------------------------------------------------------
 
-const IndexPage = lazy(() => import('src/pages/home/home'))
+const IndexPage = lazy(() => import('src/pages/home/index'))
 
 // ----------------------------------------------------------------------
 

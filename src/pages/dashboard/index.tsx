@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 
 import { CONFIG } from 'src/global-config'
 
-import { BlankView } from 'src/sections/blank/view'
+import { DashboardView } from 'src/sections/dashboard/index'
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
 
-      <BlankView title="Dashboard 🚀" />
+      <DashboardView title="Dashboard 🚀" />
     </>
   )
 }
