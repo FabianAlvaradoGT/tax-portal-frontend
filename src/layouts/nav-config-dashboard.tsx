@@ -53,7 +53,7 @@ export const navData: NavSectionProps['data'] = [
       {
         title: 'Home',
         path: paths.home,
-        icon: ICONS.dashboard,
+        icon: ICONS.parameter,
       },
     ],
   },
@@ -62,6 +62,6 @@ export const navData: NavSectionProps['data'] = [
    */
   {
     subheader: 'App',
-    items: [{ title: 'App', path: paths.dashboard.root, icon: ICONS.dashboard }],
+    items: [{ title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard }],
   },
 ]

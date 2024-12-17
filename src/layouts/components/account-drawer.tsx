@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 
-import { usePathname } from 'src/routes/hooks'
+// import { usePathname } from 'src/routes/hooks'
 import { RouterLink } from 'src/routes/components'
 
 import { Label } from 'src/components/label'
@@ -36,7 +36,7 @@ export type AccountDrawerProps = IconButtonProps & {
 }
 
 export function AccountDrawer({ data = [], sx, ...other }: AccountDrawerProps) {
-  const pathname = usePathname()
+  // const pathname = usePathname()
 
   const { user } = useMockedUser()
 
