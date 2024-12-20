@@ -86,6 +86,7 @@ export function Info() {
               value={sociedadesOptions.find((society) => society.title === value)?.domicilio || ''}
               size="small"
               fullWidth
+              disabled
               sx={{ backgroundColor: 'background.paper' }}
             />
           </Stack>
@@ -98,6 +99,7 @@ export function Info() {
               }
               size="small"
               fullWidth
+              disabled
               sx={{ backgroundColor: 'background.paper' }}
             />
             <TextField
@@ -108,6 +110,7 @@ export function Info() {
               }
               size="small"
               fullWidth
+              disabled
               sx={{ backgroundColor: 'background.paper' }}
             />
           </Stack>
