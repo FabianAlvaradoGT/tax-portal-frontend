@@ -80,7 +80,7 @@ export function Semaforo({ datos }: { datos: { sociedad: string | null } }) {
                         return (
                           <TableCell key={indexRow} align="center">
                             <Tooltip title={`Observaciones: ${countObservaciones}`}>
-                              <CircleIcon color={colors} height={30} />
+                              <CircleIcon color={colors} height={30} width={30} />
                             </Tooltip>
                           </TableCell>
                         )
