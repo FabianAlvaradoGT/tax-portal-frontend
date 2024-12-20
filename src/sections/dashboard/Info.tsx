@@ -8,21 +8,24 @@ import { ComponentBox } from 'src/components/layout/component-box'
 
 import { sociedadesOptions } from './useDashboard'
 
-export const componentBoxStyles: SxProps<Theme> = {
+const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
   alignItems: 'unset',
   justifyContent: 'flex-start',
 }
 
-export function Info() {
+export function Info({ datos }: { datos: { sociedad: string | null; setSociedad: any } }) {
+  const { sociedad, setSociedad } = datos
   const [options, setOptions] = useState(sociedadesOptions)
   const [inputValue, setInputValue] = useState('')
-  const [value, setValue] = useState<string | null>(null)
 
   return (
     <section style={{ marginTop: '25px' }}>
       <Stack gap={3} direction="column">
-        <ComponentBox title="Búsqueda" sx={componentBoxStyles}>
+        <ComponentBox
+          title="Búsqueda"
+          sx={{ ...componentBoxStyles, backgroundColor: 'background.paper' }}
+        >
           <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }}>
             <TextField
               variant="outlined"
@@ -35,7 +38,7 @@ export function Info() {
 
                 if (target === '') {
                   setOptions(sociedadesOptions)
-                  setValue(null)
+                  setSociedad(null)
                   return
                 }
 
@@ -43,7 +46,7 @@ export function Info() {
                   society.rut.includes(target)
                 )
                 setOptions(societiesFind)
-                setValue(societiesFind.length > 0 ? societiesFind[0].title : null)
+                setSociedad(societiesFind.length > 0 ? societiesFind[0].title : null)
               }}
               sx={{ backgroundColor: 'background.paper' }}
             />
@@ -51,10 +54,10 @@ export function Info() {
               size="small"
               sx={{ backgroundColor: 'background.paper' }}
               fullWidth
-              value={value}
+              value={sociedad}
               options={options.map((option) => option.title)}
               onChange={(event, newValue) => {
-                setValue(newValue)
+                setSociedad(newValue)
               }}
               inputValue={inputValue}
               onInputChange={(event, newInputValue) => {
@@ -71,11 +74,11 @@ export function Info() {
           </Stack>
         </ComponentBox>
 
-        <ComponentBox title="Datos" sx={componentBoxStyles}>
+        <ComponentBox title="Datos Básicos" sx={componentBoxStyles}>
           <Stack spacing={2} direction={{ xs: 'row', sm: 'row' }}>
             <TextField
               label="Correo"
-              value={sociedadesOptions.find((society) => society.title === value)?.email || ''}
+              value={sociedadesOptions.find((society) => society.title === sociedad)?.email || ''}
               size="small"
               fullWidth
               disabled
@@ -83,7 +86,9 @@ export function Info() {
             />
             <TextField
               label="Domicilio"
-              value={sociedadesOptions.find((society) => society.title === value)?.domicilio || ''}
+              value={
+                sociedadesOptions.find((society) => society.title === sociedad)?.domicilio || ''
+              }
               size="small"
               fullWidth
               disabled
@@ -94,8 +99,8 @@ export function Info() {
             <TextField
               label="Regimen Tributario"
               value={
-                sociedadesOptions.find((society) => society.title === value)?.regimenTributario ||
-                ''
+                sociedadesOptions.find((society) => society.title === sociedad)
+                  ?.regimenTributario || ''
               }
               size="small"
               fullWidth
@@ -105,7 +110,7 @@ export function Info() {
             <TextField
               label="Actividad Económica Principal"
               value={
-                sociedadesOptions.find((society) => society.title === value)
+                sociedadesOptions.find((society) => society.title === sociedad)
                   ?.actividadEconomicaPrincipal || ''
               }
               size="small"

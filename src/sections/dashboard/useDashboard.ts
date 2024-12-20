@@ -9,7 +9,7 @@ export const sociedadesOptions = [
   },
   {
     title: 'Sociedad 2',
-    rut: '19410509-6',
+    rut: '1945509-6',
     email: 'sociedad_2@contacto.com',
     domicilio: 'Calle 121, Maule',
     regimenTributario: 'General',
@@ -70,5 +70,80 @@ export const sociedadesOptions = [
     domicilio: 'Calle SSS, Santiago',
     regimenTributario: 'General',
     actividadEconomicaPrincipal: 'Venta de productos',
+  },
+]
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max)
+}
+
+export const dataSemaforo = () => [
+  {
+    form_name: 'IVA',
+    data: [
+      {
+        periodo: 2024,
+        observaciones: getRandomInt(5),
+      },
+      {
+        periodo: 2023,
+        observaciones: getRandomInt(5),
+      },
+      {
+        periodo: 2022,
+        observaciones: getRandomInt(5),
+      },
+    ],
+  },
+  {
+    form_name: 'Formulario 29',
+    data: [
+      {
+        periodo: 2024,
+        observaciones: getRandomInt(5),
+      },
+      {
+        periodo: 2023,
+        observaciones: getRandomInt(5),
+      },
+      {
+        periodo: 2022,
+        observaciones: getRandomInt(5),
+      },
+    ],
+  },
+  {
+    form_name: 'Formulario 3600',
+    data: [
+      {
+        periodo: 2024,
+        observaciones: getRandomInt(5),
+      },
+      {
+        periodo: 2023,
+        observaciones: getRandomInt(5),
+      },
+      {
+        periodo: 2022,
+        observaciones: getRandomInt(5),
+      },
+    ],
+  },
+  {
+    form_name: 'Formulario 50',
+    data: [
+      {
+        periodo: 2024,
+        observaciones: getRandomInt(5),
+      },
+      {
+        periodo: 2023,
+        observaciones: getRandomInt(5),
+      },
+      {
+        periodo: 2022,
+        observaciones: getRandomInt(5),
+      },
+    ],
   },
 ]
