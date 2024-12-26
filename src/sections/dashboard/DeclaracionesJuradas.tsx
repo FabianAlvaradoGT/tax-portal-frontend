@@ -41,7 +41,13 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: string | nu
               </MenuItem>
             ))}
           </TextField>
-          <Button variant="outlined" color="secondary" fullWidth onClick={() => setSearch(!search)}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            disabled={!period}
+            fullWidth
+            onClick={() => setSearch(!search)}
+          >
             Buscar
           </Button>
         </Stack>
