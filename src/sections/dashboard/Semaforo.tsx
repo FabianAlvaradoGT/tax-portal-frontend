@@ -73,10 +73,10 @@ export function Semaforo({ datos }: { datos: { sociedad: string | null } }) {
                           item.data.find((entry) => entry.periodo === period)?.observaciones || 0
                         const colors =
                           countObservaciones === 0
-                            ? '#22C55E'
+                            ? theme.palette.success.main
                             : countObservaciones < 3
-                              ? '#FFD666'
-                              : '#FF5630'
+                              ? theme.palette.warning.light
+                              : theme.palette.error.main
                         return (
                           <TableCell key={indexRow} align="center">
                             <Tooltip title={`Observaciones: ${countObservaciones}`}>
