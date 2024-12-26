@@ -1,8 +1,14 @@
 import type { Theme, SxProps } from '@mui/material'
 
-import { Alert } from '@mui/material'
+import { useState } from 'react'
 
+import { Stack, Button, Divider, MenuItem, TextField } from '@mui/material'
+
+import { TablePagination } from 'src/components/table/table'
 import { ComponentBox } from 'src/components/layout/component-box'
+
+import { YEARS } from './services/useDeclaracionesJuradas'
+import { COLUMNS, TABLE_DATA } from './services/useNotifications'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
@@ -12,15 +18,38 @@ const componentBoxStyles: SxProps<Theme> = {
 }
 
 export function Notificaciones({ datos }: { datos: { sociedad: string | null } }) {
+  const [period, setPeriod] = useState('')
+  const [search, setSearch] = useState(false)
+
   return (
     <section>
       <ComponentBox title="Notificaciones" sx={componentBoxStyles}>
-        {datos.sociedad ? (
-          <>Tabla</>
-        ) : (
-          <Alert severity="info" variant="outlined">
-            Seleccione una sociedad para ver las notificaciones.
-          </Alert>
+        <Stack spacing={2} direction="row">
+          <TextField
+            variant="outlined"
+            select
+            fullWidth
+            label="Período"
+            size="small"
+            value={period}
+            onChange={(event) => setPeriod(event.target.value)}
+          >
+            {YEARS.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Button variant="outlined" color="secondary" fullWidth onClick={() => setSearch(!search)}>
+            Buscar
+          </Button>
+        </Stack>
+
+        {search && (
+          <>
+            <Divider />
+            <TablePagination columns={COLUMNS} data={TABLE_DATA} />
+          </>
         )}
       </ComponentBox>
     </section>

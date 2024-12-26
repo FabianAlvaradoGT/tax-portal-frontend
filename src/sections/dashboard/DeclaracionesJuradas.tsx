@@ -1,8 +1,13 @@
 import type { Theme, SxProps } from '@mui/material'
 
-import { Alert, Stack, Button, MenuItem, TextField } from '@mui/material'
+import { useState } from 'react'
 
+import { Stack, Button, Divider, MenuItem, TextField } from '@mui/material'
+
+import { TablePagination } from 'src/components/table/table'
 import { ComponentBox } from 'src/components/layout/component-box'
+
+import { YEARS, COLUMNS, TABLE_DATA } from './services/useDeclaracionesJuradas'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
@@ -11,33 +16,41 @@ const componentBoxStyles: SxProps<Theme> = {
   backgroundColor: 'background.paper',
 }
 
-const YEARS = [
-  { value: '2021', label: '2021' },
-  { value: '2020', label: '2020' },
-  { value: '2019', label: '2019' },
-]
+// ----------------------------------------------------------------------
 
 export function DeclaracionesJuradas({ datos }: { datos: { sociedad: string | null } }) {
+  const [period, setPeriod] = useState('')
+  const [search, setSearch] = useState(false)
+
   return (
     <section>
       <ComponentBox title="Declaraciones Juradas" sx={componentBoxStyles}>
-        {datos.sociedad ? (
-          <Stack spacing={2} direction="row">
-            <TextField variant="outlined" select fullWidth label="Período" size="small">
-              {YEARS.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <Button variant="outlined" color="secondary" fullWidth>
-              Buscar
-            </Button>
-          </Stack>
-        ) : (
-          <Alert severity="info" variant="outlined">
-            Seleccione una sociedad para ver las declaraciones juradas.
-          </Alert>
+        <Stack spacing={2} direction="row">
+          <TextField
+            variant="outlined"
+            select
+            fullWidth
+            label="Período"
+            size="small"
+            value={period}
+            onChange={(event) => setPeriod(event.target.value)}
+          >
+            {YEARS.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Button variant="outlined" color="secondary" fullWidth onClick={() => setSearch(!search)}>
+            Buscar
+          </Button>
+        </Stack>
+
+        {search && (
+          <>
+            <Divider />
+            <TablePagination columns={COLUMNS} data={TABLE_DATA} />
+          </>
         )}
       </ComponentBox>
     </section>

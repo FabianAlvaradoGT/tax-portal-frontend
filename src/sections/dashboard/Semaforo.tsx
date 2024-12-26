@@ -15,7 +15,7 @@ import {
 import { ComponentBox } from 'src/components/layout/component-box'
 
 import { CircleIcon } from './CircleIcon'
-import { dataSemaforo } from './useDashboard'
+import { dataSemaforo } from './services/useDashboard'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',

@@ -6,7 +6,7 @@ import { Stack, TextField, Autocomplete } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
 
-import { sociedadesOptions } from './useDashboard'
+import { sociedadesOptions } from './services/useDashboard'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
