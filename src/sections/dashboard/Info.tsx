@@ -26,7 +26,11 @@ export function Info({ datos }: { datos: { sociedad: string | null; setSociedad:
                 value={sociedadesOptions.find((society) => society.title === sociedad)?.email || ''}
                 size="small"
                 fullWidth
-                disabled
+                slotProps={{
+                  input: {
+                    readOnly: true,
+                  },
+                }}
                 sx={{ backgroundColor: 'background.paper' }}
               />
               <TextField
@@ -36,7 +40,11 @@ export function Info({ datos }: { datos: { sociedad: string | null; setSociedad:
                 }
                 size="small"
                 fullWidth
-                disabled
+                slotProps={{
+                  input: {
+                    readOnly: true,
+                  },
+                }}
                 sx={{ backgroundColor: 'background.paper' }}
               />
             </Stack>
@@ -49,7 +57,11 @@ export function Info({ datos }: { datos: { sociedad: string | null; setSociedad:
                 }
                 size="small"
                 fullWidth
-                disabled
+                slotProps={{
+                  input: {
+                    readOnly: true,
+                  },
+                }}
                 sx={{ backgroundColor: 'background.paper' }}
               />
               <TextField
@@ -60,7 +72,11 @@ export function Info({ datos }: { datos: { sociedad: string | null; setSociedad:
                 }
                 size="small"
                 fullWidth
-                disabled
+                slotProps={{
+                  input: {
+                    readOnly: true,
+                  },
+                }}
                 sx={{ backgroundColor: 'background.paper' }}
               />
             </Stack>
