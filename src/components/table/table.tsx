@@ -24,13 +24,7 @@ export interface Column<T> {
 
 // ----------------------------------------------------------------------
 
-export function TablePagination({
-  columns,
-  data,
-}: {
-  columns: Column<TableRow>[]
-  data: TableRow[]
-}) {
+export function TablePagination({ columns, data }: { columns: Column<TableRow>[]; data: any[] }) {
   const { page, rowsPerPage, setPage } = useTable({ defaultRowsPerPage: 5, defaultCurrentPage: 1 })
   const COLUMNS = columns
   const TABLE_DATA = data
@@ -41,23 +35,33 @@ export function TablePagination({
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              {COLUMNS.map((column) => (
-                <TableCell key={column.id} align={column.align}>
-                  {column.label}
-                </TableCell>
-              ))}
+              {COLUMNS.map((column) => {
+                if (column.id !== 'key') {
+                  return (
+                    <TableCell key={column.id} align={column.align}>
+                      {column.label}
+                    </TableCell>
+                  )
+                }
+
+                return null
+              })}
             </TableRow>
           </TableHead>
 
           <TableBody>
             {TABLE_DATA.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage).map(
-              (row) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+              (row, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={`${row.id}_${index}`}>
                   {COLUMNS.map((column) => {
+                    if (column.id === 'key') {
+                      return null
+                    }
+
                     const value = row[column.id]
 
                     return (
-                      <TableCell key={column.id} align={column.align}>
+                      <TableCell key={`${column.id}_${index}`} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
                       </TableCell>
                     )

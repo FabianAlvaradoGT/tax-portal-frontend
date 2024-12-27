@@ -12,6 +12,8 @@ import { Formularios } from './Formularios'
 import { Notificaciones } from './Notificaciones'
 import { DeclaracionesJuradas } from './DeclaracionesJuradas'
 
+import type { Data } from './services/dataReducer'
+
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -19,7 +21,7 @@ type Props = {
 }
 
 export function DashboardView({ title = 'Blank' }: Props) {
-  const [sociedad, setSociedad] = useState<string | null>(null)
+  const [sociedad, setSociedad] = useState<Data | null>(null)
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4"> {title} </Typography>

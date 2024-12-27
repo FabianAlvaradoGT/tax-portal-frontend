@@ -8,6 +8,8 @@ import { ComponentBox } from 'src/components/layout/component-box'
 
 import { FORMS, YEARS } from './services/useFormularios'
 
+import type { Data } from './services/dataReducer'
+
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
   alignItems: 'unset',
@@ -15,7 +17,7 @@ const componentBoxStyles: SxProps<Theme> = {
   backgroundColor: 'background.paper',
 }
 
-export function Formularios({ datos }: { datos: { sociedad: string | null } }) {
+export function Formularios({ datos }: { datos: { sociedad: Data | null } }) {
   const [period, setPeriod] = useState('')
   const [form, setForm] = useState('')
   const [search, setSearch] = useState(false)

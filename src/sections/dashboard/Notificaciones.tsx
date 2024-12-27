@@ -10,6 +10,8 @@ import { ComponentBox } from 'src/components/layout/component-box'
 import { YEARS } from './services/useDeclaracionesJuradas'
 import { COLUMNS, TABLE_DATA } from './services/useNotifications'
 
+import type { Data } from './services/dataReducer'
+
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
   alignItems: 'unset',
@@ -17,7 +19,7 @@ const componentBoxStyles: SxProps<Theme> = {
   backgroundColor: 'background.paper',
 }
 
-export function Notificaciones({ datos }: { datos: { sociedad: string | null } }) {
+export function Notificaciones({ datos }: { datos: { sociedad: Data | null } }) {
   const [period, setPeriod] = useState('')
   const [search, setSearch] = useState(false)
 

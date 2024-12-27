@@ -8,13 +8,15 @@ import { ComponentBox } from 'src/components/layout/component-box'
 
 import { sociedadesOptions } from './services/useDashboard'
 
+import type { Data } from './services/dataReducer'
+
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
   alignItems: 'unset',
   justifyContent: 'flex-start',
 }
 
-export function Search({ datos }: { datos: { sociedad: string | null; setSociedad: any } }) {
+export function Search({ datos }: { datos: { sociedad: Data | null; setSociedad: any } }) {
   const { sociedad, setSociedad } = datos
   const [options, setOptions] = useState(sociedadesOptions)
   const [inputValue, setInputValue] = useState('')
@@ -45,7 +47,7 @@ export function Search({ datos }: { datos: { sociedad: string | null; setSocieda
                 society.rut.includes(target)
               )
               setOptions(societiesFind)
-              setSociedad(societiesFind.length > 0 ? societiesFind[0].title : null)
+              setSociedad(societiesFind.length > 0 ? societiesFind[0].razon_social : null)
             }}
             sx={{ backgroundColor: 'background.paper' }}
           />
@@ -54,7 +56,7 @@ export function Search({ datos }: { datos: { sociedad: string | null; setSocieda
             sx={{ backgroundColor: 'background.paper' }}
             fullWidth
             value={sociedad}
-            options={options.map((option) => option.title)}
+            options={options.map((option) => option)}
             onChange={(event, newValue) => {
               setSociedad(newValue)
             }}
@@ -62,11 +64,11 @@ export function Search({ datos }: { datos: { sociedad: string | null; setSocieda
             onInputChange={(event, newInputValue) => {
               setInputValue(newInputValue)
             }}
-            getOptionLabel={(option) => option}
+            getOptionLabel={(option) => option.razon_social}
             renderInput={(params) => <TextField {...params} label="Sociedad" />}
             renderOption={(props, option) => (
-              <li {...props} key={option}>
-                {option}
+              <li {...props} key={option.uuid}>
+                {option.razon_social}
               </li>
             )}
           />

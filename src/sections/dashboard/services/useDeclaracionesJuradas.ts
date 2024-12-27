@@ -1,27 +1,142 @@
 import type { Column, TableRow } from 'src/components/table/table'
 
-export const TABLE_DATA: TableRow[] = [
-  { id: '1', numero: '0001', estado: 'Activo', detalle: 'Detalle 1' },
-  { id: '2', numero: '0002', estado: 'Inactivo', detalle: 'Detalle 2' },
-  { id: '3', numero: '0003', estado: 'Activo', detalle: 'Detalle 3' },
-  { id: '4', numero: '0004', estado: 'Inactivo', detalle: 'Detalle 4' },
-  { id: '5', numero: '0005', estado: 'Activo', detalle: 'Detalle 5' },
-  { id: '6', numero: '0006', estado: 'Activo', detalle: 'Detalle 6' },
-  { id: '7', numero: '0007', estado: 'Inactivo', detalle: 'Detalle 7' },
-  { id: '8', numero: '0008', estado: 'Activo', detalle: 'Detalle 8' },
-  { id: '9', numero: '0009', estado: 'Inactivo', detalle: 'Detalle 9' },
-  { id: '10', numero: '0010', estado: 'Activo', detalle: 'Detalle 10' },
-  { id: '11', numero: '0011', estado: 'Activo', detalle: 'Detalle 11' },
-  { id: '12', numero: '0012', estado: 'Inactivo', detalle: 'Detalle 12' },
-  { id: '13', numero: '0013', estado: 'Activo', detalle: 'Detalle 13' },
-  { id: '14', numero: '0014', estado: 'Inactivo', detalle: 'Detalle 14' },
-  { id: '15', numero: '0015', estado: 'Activo', detalle: 'Detalle 15' },
+interface DeclaracionJurada {
+  uuid: string
+  uuid_sociedad: string
+  numero: number
+  periodo: number
+  fecha_insercion: string
+  estado_declaracion: string
+}
+
+export const TABLE_DATA: DeclaracionJurada[] = [
+  {
+    uuid: '1',
+    uuid_sociedad: '',
+    numero: 1,
+    estado_declaracion: 'Activo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '2',
+    uuid_sociedad: '',
+    numero: 2,
+    estado_declaracion: 'Inactivo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '3',
+    uuid_sociedad: '',
+    numero: 3,
+    estado_declaracion: 'Activo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '4',
+    uuid_sociedad: '',
+    numero: 4,
+    estado_declaracion: 'Inactivo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '5',
+    uuid_sociedad: '',
+    numero: 5,
+    estado_declaracion: 'Activo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '6',
+    uuid_sociedad: '',
+    numero: 6,
+    estado_declaracion: 'Activo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '7',
+    uuid_sociedad: '',
+    numero: 7,
+    estado_declaracion: 'Inactivo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '8',
+    uuid_sociedad: '',
+    numero: 8,
+    estado_declaracion: 'Activo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '9',
+    uuid_sociedad: '',
+    numero: 9,
+    estado_declaracion: 'Inactivo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '10',
+    uuid_sociedad: '',
+    numero: 10,
+    estado_declaracion: 'Activo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '11',
+    uuid_sociedad: '',
+    numero: 11,
+    estado_declaracion: 'Activo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '12',
+    uuid_sociedad: '',
+    numero: 12,
+    estado_declaracion: 'Inactivo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '13',
+    uuid_sociedad: '',
+    numero: 13,
+    estado_declaracion: 'Activo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '14',
+    uuid_sociedad: '',
+    numero: 14,
+    estado_declaracion: 'Inactivo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
+  {
+    uuid: '15',
+    uuid_sociedad: '',
+    numero: 15,
+    estado_declaracion: 'Activo',
+    periodo: 2024,
+    fecha_insercion: '2024-12-27',
+  },
 ]
 
 export const COLUMNS: Column<TableRow>[] = [
   { id: 'numero', label: 'Número' },
-  { id: 'estado', label: 'Estado' },
-  { id: 'detalle', label: 'Detalle' },
+  { id: 'estado_declaracion', label: 'Estado Declaración' },
+  { id: 'periodo', label: 'Periodo' },
+  { id: 'key', label: 'uuid' },
 ]
 
 export const YEARS = [

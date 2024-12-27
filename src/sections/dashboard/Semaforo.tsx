@@ -17,6 +17,8 @@ import { ComponentBox } from 'src/components/layout/component-box'
 import { CircleIcon } from './CircleIcon'
 import { dataSemaforo } from './services/useDashboard'
 
+import type { Data } from './services/dataReducer'
+
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
   alignItems: 'unset',
@@ -24,7 +26,7 @@ const componentBoxStyles: SxProps<Theme> = {
   backgroundColor: 'background.paper',
 }
 
-export function Semaforo({ datos }: { datos: { sociedad: string | null } }) {
+export function Semaforo({ datos }: { datos: { sociedad: Data | null } }) {
   const theme = useTheme()
 
   const data = dataSemaforo()

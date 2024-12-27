@@ -9,6 +9,8 @@ import { ComponentBox } from 'src/components/layout/component-box'
 
 import { YEARS, COLUMNS, TABLE_DATA } from './services/useDeclaracionesJuradas'
 
+import type { Data } from './services/dataReducer'
+
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
   alignItems: 'unset',
@@ -18,7 +20,7 @@ const componentBoxStyles: SxProps<Theme> = {
 
 // ----------------------------------------------------------------------
 
-export function DeclaracionesJuradas({ datos }: { datos: { sociedad: string | null } }) {
+export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Data | null } }) {
   const [period, setPeriod] = useState('')
   const [search, setSearch] = useState(false)
 
