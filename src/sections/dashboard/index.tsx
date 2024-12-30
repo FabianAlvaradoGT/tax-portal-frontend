@@ -1,3 +1,5 @@
+import type { Theme, SxProps } from '@mui/material'
+
 import { toast } from 'sonner'
 import { useState, useEffect } from 'react'
 
@@ -17,6 +19,13 @@ import { DeclaracionesJuradas } from './declaraciones-juradas/DeclaracionesJurad
 import type { Company } from './useSearch'
 
 // ----------------------------------------------------------------------
+
+export const componentBoxStyles: SxProps<Theme> = {
+  flexDirection: 'column',
+  alignItems: 'unset',
+  justifyContent: 'flex-start',
+  // backgroundColor: 'background.paper',
+}
 
 type Props = {
   title?: string

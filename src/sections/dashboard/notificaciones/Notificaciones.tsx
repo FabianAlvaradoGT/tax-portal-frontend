@@ -1,4 +1,3 @@
-import type { Theme, SxProps } from '@mui/material'
 import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { toast } from 'sonner'
@@ -11,17 +10,12 @@ import { ComponentBox } from 'src/components/layout/component-box'
 import { DialogMarkdown } from 'src/components/markdown/DialogMarkdown'
 import { ReactTable } from 'src/components/react-table/ReactTableTemplate'
 
+import { componentBoxStyles } from 'src/sections/dashboard/index'
+
 import { NotificationesColumns } from './Columns'
 import { YEARS, getNotification } from './useNotifications'
 
 import type { Notification } from './useNotifications'
-
-const componentBoxStyles: SxProps<Theme> = {
-  flexDirection: 'column',
-  alignItems: 'unset',
-  justifyContent: 'flex-start',
-  backgroundColor: 'background.paper',
-}
 
 export function Notificaciones({ datos }: { datos: { sociedad: Company | null } }) {
   const [period, setPeriod] = useState('')
@@ -96,6 +90,7 @@ export function Notificaciones({ datos }: { datos: { sociedad: Company | null } 
             variant="outlined"
             color="secondary"
             disabled={!period}
+            sx={{ backgroundColor: 'background.paper' }}
             fullWidth
             onClick={() => handleSearch()}
           >

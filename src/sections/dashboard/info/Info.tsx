@@ -1,15 +1,10 @@
-import type { Theme, SxProps } from '@mui/material'
 import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { Stack, Alert, TextField } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
 
-const componentBoxStyles: SxProps<Theme> = {
-  flexDirection: 'column',
-  alignItems: 'unset',
-  justifyContent: 'flex-start',
-}
+import { componentBoxStyles } from 'src/sections/dashboard/index'
 
 export function Info({ datos }: { datos: { sociedad: Company | null; data: Company[] } }) {
   const { sociedad, data } = datos

@@ -1,4 +1,3 @@
-import type { Theme, SxProps } from '@mui/material'
 import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { useState, useEffect } from 'react'
@@ -7,11 +6,7 @@ import { Stack, TextField, Autocomplete } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
 
-const componentBoxStyles: SxProps<Theme> = {
-  flexDirection: 'column',
-  alignItems: 'unset',
-  justifyContent: 'flex-start',
-}
+import { componentBoxStyles } from 'src/sections/dashboard/index'
 
 export function Search({
   datos,
@@ -30,10 +25,7 @@ export function Search({
 
   return (
     <section style={{ marginTop: '25px' }}>
-      <ComponentBox
-        title="Búsqueda"
-        sx={{ ...componentBoxStyles, backgroundColor: 'background.paper' }}
-      >
+      <ComponentBox title="Búsqueda" sx={{ ...componentBoxStyles }}>
         <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }}>
           <TextField
             variant="outlined"

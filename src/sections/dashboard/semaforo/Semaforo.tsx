@@ -1,4 +1,3 @@
-import type { Theme, SxProps } from '@mui/material'
 import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { toast } from 'sonner'
@@ -19,16 +18,11 @@ import { CircleIcon } from 'src/components/others/CircleIcon'
 import { TableLoading } from 'src/components/table/table-loading'
 import { ComponentBox } from 'src/components/layout/component-box'
 
+import { componentBoxStyles } from 'src/sections/dashboard/index'
+
 import { getForms } from './useSemaforo'
 
 import type { Forms } from './useSemaforo'
-
-const componentBoxStyles: SxProps<Theme> = {
-  flexDirection: 'column',
-  alignItems: 'unset',
-  justifyContent: 'flex-start',
-  backgroundColor: 'background.paper',
-}
 
 export function Semaforo({ datos }: { datos: { sociedad: Company | null } }) {
   const theme = useTheme()
@@ -67,6 +61,7 @@ export function Semaforo({ datos }: { datos: { sociedad: Company | null } }) {
               border: `1px solid ${theme.palette.divider}`,
               borderRadius: '2px',
               width: '700px',
+              backgroundColor: 'background.paper',
               margin: 'auto',
             }}
           >

@@ -1,4 +1,3 @@
-import type { Theme, SxProps } from '@mui/material'
 import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { useState } from 'react'
@@ -7,14 +6,9 @@ import { Stack, Button, MenuItem, TextField } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
 
-import { FORMS, YEARS } from './useFormularios'
+import { componentBoxStyles } from 'src/sections/dashboard/index'
 
-const componentBoxStyles: SxProps<Theme> = {
-  flexDirection: 'column',
-  alignItems: 'unset',
-  justifyContent: 'flex-start',
-  backgroundColor: 'background.paper',
-}
+import { FORMS, YEARS } from './useFormularios'
 
 export function Formularios({ datos }: { datos: { sociedad: Company | null } }) {
   const [period, setPeriod] = useState('')
@@ -30,6 +24,7 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
             select
             fullWidth
             label="Reporte"
+            sx={{ backgroundColor: 'background.paper' }}
             size="small"
             value={form}
             name="form"
@@ -50,6 +45,7 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
             fullWidth
             label="Período"
             size="small"
+            sx={{ backgroundColor: 'background.paper' }}
             value={period}
             onChange={(event) => setPeriod(event.target.value)}
           >
@@ -65,6 +61,7 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
             variant="outlined"
             color="secondary"
             fullWidth
+            sx={{ backgroundColor: 'background.paper' }}
             onClick={() => setSearch(!search)}
           >
             Buscar

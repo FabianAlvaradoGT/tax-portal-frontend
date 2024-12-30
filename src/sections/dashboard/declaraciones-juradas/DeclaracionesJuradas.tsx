@@ -1,4 +1,3 @@
-import type { Theme, SxProps } from '@mui/material'
 import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { toast } from 'sonner'
@@ -9,17 +8,12 @@ import { Stack, Button, Divider, Skeleton, TextField, Autocomplete } from '@mui/
 import { ComponentBox } from 'src/components/layout/component-box'
 import { ReactTable } from 'src/components/react-table/ReactTableTemplate'
 
+import { componentBoxStyles } from 'src/sections/dashboard/index'
+
 import { DeclaracionesJuradasColumns } from './Columns'
 import { YEARS, getDeclaracionesJuradas } from './useDeclaracionesJuradas'
 
 import type { DDJJ } from './useDeclaracionesJuradas'
-
-const componentBoxStyles: SxProps<Theme> = {
-  flexDirection: 'column',
-  alignItems: 'unset',
-  justifyContent: 'flex-start',
-  backgroundColor: 'background.paper',
-}
 
 // ----------------------------------------------------------------------
 
@@ -92,6 +86,7 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Company | n
           <Button
             variant="outlined"
             color="secondary"
+            sx={{ backgroundColor: 'background.paper' }}
             disabled={!period}
             fullWidth
             onClick={() => handleSearch()}
@@ -102,6 +97,7 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Company | n
             variant="outlined"
             color="success"
             disabled={!period}
+            sx={{ backgroundColor: 'background.paper' }}
             fullWidth
             onClick={() => {}}
           >

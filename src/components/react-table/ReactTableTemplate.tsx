@@ -259,7 +259,14 @@ export const ReactTable = ({
         </Stack>
       </Stack>
 
-      <Table {...getTableProps()}>
+      <Table
+        {...getTableProps()}
+        sx={{
+          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: '10px',
+          backgroundColor: 'background.paper',
+        }}
+      >
         <TableHead>
           {headerGroups.map((headerGroup, indexHeaderGroup) => (
             <TableRow
