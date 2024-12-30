@@ -15,13 +15,16 @@ export const DeclaracionesJuradasColumns = (): Props[] => [
   {
     Header: 'Número',
     accessor: 'numero',
+    className: 'cell-center',
   },
   {
     Header: 'Estado Declaración',
     accessor: 'estado_declaracion',
+    className: 'cell-center',
   },
   {
     Header: 'Periodo',
     accessor: 'periodo',
+    className: 'cell-center',
   },
 ]
