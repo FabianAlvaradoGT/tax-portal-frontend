@@ -1,14 +1,12 @@
 import type { Theme, SxProps } from '@mui/material'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { Stack, TextField, Autocomplete } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
 
-import { sociedadesOptions } from './services/useDashboard'
-
-import type { Data } from './services/dataReducer'
+import type { Company } from './services/useSearch'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
@@ -16,10 +14,20 @@ const componentBoxStyles: SxProps<Theme> = {
   justifyContent: 'flex-start',
 }
 
-export function Search({ datos }: { datos: { sociedad: Data | null; setSociedad: any } }) {
-  const { sociedad, setSociedad } = datos
-  const [options, setOptions] = useState(sociedadesOptions)
+export function Search({
+  datos,
+}: {
+  datos: { sociedad: Company | null; setSociedad: any; data: Company[]; loading: boolean }
+}) {
+  const { sociedad, setSociedad, data, loading } = datos
+  const [options, setOptions] = useState<Company[]>([])
   const [inputValue, setInputValue] = useState('')
+
+  useEffect(() => {
+    if (data) {
+      setOptions(data)
+    }
+  }, [data])
 
   return (
     <section style={{ marginTop: '25px' }}>
@@ -38,33 +46,35 @@ export function Search({ datos }: { datos: { sociedad: Data | null; setSociedad:
               const target = e.target.value
 
               if (target === '') {
-                setOptions(sociedadesOptions)
+                setOptions(data)
                 setSociedad(null)
                 return
               }
 
-              const societiesFind = sociedadesOptions.filter((society) =>
-                society.rut.includes(target)
-              )
+              const societiesFind = data.filter((society) => society.rut.includes(target))
               setOptions(societiesFind)
-              setSociedad(societiesFind.length > 0 ? societiesFind[0].razon_social : null)
+              setSociedad(societiesFind.length > 0 ? societiesFind[0] : null)
             }}
             sx={{ backgroundColor: 'background.paper' }}
           />
+
           <Autocomplete
             size="small"
             sx={{ backgroundColor: 'background.paper' }}
             fullWidth
-            value={sociedad}
-            options={options.map((option) => option)}
+            value={sociedad || null}
+            loading={loading}
+            loadingText="Cargando..."
+            options={options}
+            getOptionLabel={(option) => option.razon_social}
             onChange={(event, newValue) => {
               setSociedad(newValue)
+              setInputValue(newValue ? newValue.uuid : '')
             }}
             inputValue={inputValue}
             onInputChange={(event, newInputValue) => {
               setInputValue(newInputValue)
             }}
-            getOptionLabel={(option) => option.razon_social}
             renderInput={(params) => <TextField {...params} label="Sociedad" />}
             renderOption={(props, option) => (
               <li {...props} key={option.uuid}>

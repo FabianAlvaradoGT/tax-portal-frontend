@@ -1,7 +1,7 @@
 import { useSetState } from 'minimal-shared/hooks'
 import { useMemo, useEffect, useCallback } from 'react'
 
-import axios, { endpoints } from 'src/lib/axios'
+import axios, { endpoints } from 'src/lib/auth_axios'
 
 import { JWT_STORAGE_KEY } from './constant'
 import { AuthContext } from '../auth-context'

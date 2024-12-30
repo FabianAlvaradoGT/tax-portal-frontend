@@ -9,6 +9,7 @@ export type ConfigValue = {
   appVersion: string
   serverUrl: string
   assetsDir: string
+  apiUrl: string
   auth: {
     method: 'jwt' | 'amplify' | 'firebase' | 'supabase' | 'auth0'
     skip: boolean
@@ -35,6 +36,7 @@ export const CONFIG: ConfigValue = {
   appName: 'Tax Portal',
   appVersion: packageJson.version,
   serverUrl: import.meta.env.VITE_SERVER_URL ?? '',
+  apiUrl: import.meta.env.VITE_API_URL ?? '',
   assetsDir: import.meta.env.VITE_ASSETS_DIR ?? '',
   /**
    * Auth

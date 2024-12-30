@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { toast } from 'sonner'
+import { useState, useEffect } from 'react'
 
 import { Alert, Stack } from '@mui/material'
 import Typography from '@mui/material/Typography'
@@ -10,9 +11,10 @@ import { Search } from './Search'
 import { Semaforo } from './Semaforo'
 import { Formularios } from './Formularios'
 import { Notificaciones } from './Notificaciones'
+import { getCompanyAll } from './services/useSearch'
 import { DeclaracionesJuradas } from './DeclaracionesJuradas'
 
-import type { Data } from './services/dataReducer'
+import type { Company } from './services/useSearch'
 
 // ----------------------------------------------------------------------
 
@@ -21,17 +23,35 @@ type Props = {
 }
 
 export function DashboardView({ title = 'Blank' }: Props) {
-  const [sociedad, setSociedad] = useState<Data | null>(null)
+  const [data, setData] = useState<Company[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getCompanyAll()
+      .then((d) => {
+        setData(d)
+      })
+      .catch((err) => {
+        const errorMessage = err.detail || 'Error al cargar los datos'
+        toast.error(errorMessage)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
+
+  const [sociedad, setSociedad] = useState<Company | null>(null)
+
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4"> {title} </Typography>
 
       <Stack spacing={3} direction="column">
-        <Search datos={{ sociedad, setSociedad }} />
+        <Search datos={{ sociedad, setSociedad, data, loading }} />
 
         {sociedad ? (
           <>
-            <Info datos={{ sociedad, setSociedad }} />
+            <Info datos={{ sociedad, data }} />
             <Semaforo datos={{ sociedad }} />
             <Formularios datos={{ sociedad }} />
             <DeclaracionesJuradas datos={{ sociedad }} />

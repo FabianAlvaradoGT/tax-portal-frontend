@@ -1,32 +1,16 @@
-import axios from 'axios'
-import { useEffect, useReducer } from 'react'
+import axiosInstance from 'src/lib/axios'
 
-import { dataReducer, initialState } from './dataReducer'
-
-import type { DataState, DataAction } from './dataReducer'
-
-type UseFetchDataReturn = {
-  state: DataState
-  dispatch: React.Dispatch<DataAction>
+export interface Company {
+  uuid: string
+  uuid_cliente: string
+  rut: string
+  razon_social: string
+  estado: boolean
+  domicilio: string
+  email: string
 }
 
-export function useSearch(url: string): UseFetchDataReturn {
-  const [state, dispatch] = useReducer(dataReducer, initialState)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      dispatch({ type: 'FETCH_DATA_START' })
-
-      try {
-        const response = await axios.get(url)
-        dispatch({ type: 'FETCH_DATA_SUCCESS', payload: response.data })
-      } catch (error: any) {
-        dispatch({ type: 'FETCH_DATA_ERROR', payload: error.message })
-      }
-    }
-
-    fetchData()
-  }, [url])
-
-  return { state, dispatch }
+export const getCompanyAll = async (): Promise<Company[]> => {
+  const response = await axiosInstance.get<Company[]>(`/company/all`)
+  return response.data
 }

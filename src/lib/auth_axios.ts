@@ -6,9 +6,9 @@ import { CONFIG } from 'src/global-config'
 
 // ----------------------------------------------------------------------
 
-const axiosInstance = axios.create({ baseURL: CONFIG.apiUrl })
+const axiosAuthInstance = axios.create({ baseURL: CONFIG.serverUrl })
 
-axiosInstance.interceptors.request.use(
+axiosAuthInstance.interceptors.request.use(
   (config) =>
     // Puedes agregar lógica para inyectar tokens (JWT, etc.)
     // config.headers.Authorization = `Bearer ${token}`;
@@ -16,12 +16,12 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-axiosInstance.interceptors.response.use(
+axiosAuthInstance.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!')
 )
 
-export default axiosInstance
+export default axiosAuthInstance
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
   try {
     const [url, config] = Array.isArray(args) ? args : [args]
 
-    const res = await axiosInstance.get(url, { ...config })
+    const res = await axiosAuthInstance.get(url, { ...config })
 
     return res.data
   } catch (error) {

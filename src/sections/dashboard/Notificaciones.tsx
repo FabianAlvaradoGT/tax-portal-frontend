@@ -10,7 +10,7 @@ import { ComponentBox } from 'src/components/layout/component-box'
 import { YEARS } from './services/useDeclaracionesJuradas'
 import { COLUMNS, TABLE_DATA } from './services/useNotifications'
 
-import type { Data } from './services/dataReducer'
+import type { Company } from './services/useSearch'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
@@ -19,9 +19,10 @@ const componentBoxStyles: SxProps<Theme> = {
   backgroundColor: 'background.paper',
 }
 
-export function Notificaciones({ datos }: { datos: { sociedad: Data | null } }) {
+export function Notificaciones({ datos }: { datos: { sociedad: Company | null } }) {
   const [period, setPeriod] = useState('')
   const [search, setSearch] = useState(false)
+  const [loading] = useState(false)
 
   return (
     <section>
@@ -56,7 +57,7 @@ export function Notificaciones({ datos }: { datos: { sociedad: Data | null } }) 
         {search && (
           <>
             <Divider />
-            <TablePagination columns={COLUMNS} data={TABLE_DATA} />
+            <TablePagination columns={COLUMNS} data={TABLE_DATA} loading={loading} />
           </>
         )}
       </ComponentBox>

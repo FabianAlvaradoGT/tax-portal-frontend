@@ -1,4 +1,4 @@
-import axios, { endpoints } from 'src/lib/axios'
+import axios, { endpoints } from 'src/lib/auth_axios'
 
 import { setSession } from './utils'
 import { JWT_STORAGE_KEY } from './constant'

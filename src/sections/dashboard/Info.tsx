@@ -4,9 +4,7 @@ import { Stack, Alert, TextField } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
 
-import { sociedadesOptions } from './services/useDashboard'
-
-import type { Data } from './services/dataReducer'
+import type { Company } from './services/useSearch'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
@@ -14,21 +12,24 @@ const componentBoxStyles: SxProps<Theme> = {
   justifyContent: 'flex-start',
 }
 
-export function Info({ datos }: { datos: { sociedad: Data | null; setSociedad: any } }) {
-  const { sociedad } = datos
-  const search = sociedadesOptions.find((society) => society.razon_social === sociedad.razon_social)
+export function Info({ datos }: { datos: { sociedad: Company | null; data: Company[] } }) {
+  const { sociedad, data } = datos
+  const societyFind = data.find((society) => society?.razon_social === sociedad?.razon_social)
 
   return (
     <section style={{ marginTop: '25px' }}>
-      <ComponentBox title="Datos Básicos" sx={componentBoxStyles}>
+      <ComponentBox
+        title={`Datos Básicos - ${sociedad?.razon_social} - ${sociedad?.rut}`}
+        sx={componentBoxStyles}
+      >
         {sociedad ? (
           <Stack spacing={2} direction={{ xs: 'row', sm: 'row' }}>
             <TextField
               label="Correo"
-              value={search?.email || 'Sin correo'}
+              value={societyFind?.email || 'Sin correo'}
               size="small"
               fullWidth
-              disabled={search?.email === null}
+              disabled={sociedad?.email === null}
               slotProps={{
                 input: {
                   readOnly: true,
@@ -38,10 +39,10 @@ export function Info({ datos }: { datos: { sociedad: Data | null; setSociedad: a
             />
             <TextField
               label="Domicilio"
-              value={search?.domicilio || 'Sin domicilio'}
+              value={societyFind?.domicilio || 'Sin domicilio'}
               size="small"
+              disabled={sociedad?.domicilio === null}
               fullWidth
-              disabled={search?.domicilio === null}
               slotProps={{
                 input: {
                   readOnly: true,

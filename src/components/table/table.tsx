@@ -8,6 +8,8 @@ import TableBody from '@mui/material/TableBody'
 import { useTable } from 'src/components/table'
 import { Scrollbar } from 'src/components/scrollbar'
 
+import { TableLoading } from './table-loading'
+
 // ----------------------------------------------------------------------
 
 export interface TableRow {
@@ -24,7 +26,15 @@ export interface Column<T> {
 
 // ----------------------------------------------------------------------
 
-export function TablePagination({ columns, data }: { columns: Column<TableRow>[]; data: any[] }) {
+export function TablePagination({
+  columns,
+  data,
+  loading,
+}: {
+  columns: Column<TableRow>[]
+  data: any[]
+  loading: boolean
+}) {
   const { page, rowsPerPage, setPage } = useTable({ defaultRowsPerPage: 5, defaultCurrentPage: 1 })
   const COLUMNS = columns
   const TABLE_DATA = data
@@ -50,6 +60,22 @@ export function TablePagination({ columns, data }: { columns: Column<TableRow>[]
           </TableHead>
 
           <TableBody>
+            {loading && (
+              <TableRow>
+                <TableCell align="center" colSpan={COLUMNS.length}>
+                  <TableLoading />
+                </TableCell>
+              </TableRow>
+            )}
+
+            {TABLE_DATA.length === 0 && !loading && (
+              <TableRow>
+                <TableCell align="center" colSpan={COLUMNS.length}>
+                  No hay datos
+                </TableCell>
+              </TableRow>
+            )}
+
             {TABLE_DATA.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage).map(
               (row, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={`${row.id}_${index}`}>
@@ -73,18 +99,20 @@ export function TablePagination({ columns, data }: { columns: Column<TableRow>[]
         </Table>
       </Scrollbar>
 
-      <Pagination
-        page={page}
-        count={Math.ceil(TABLE_DATA.length / 5)}
-        onChange={(event, newPage) => setPage(newPage)}
-        size="small"
-        color="standard"
-        sx={{
-          pt: 1,
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      />
+      {(!loading || TABLE_DATA.length > 0) && (
+        <Pagination
+          page={page}
+          count={Math.ceil(TABLE_DATA.length / 5)}
+          onChange={(event, newPage) => setPage(newPage)}
+          size="small"
+          color="standard"
+          sx={{
+            pt: 1,
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        />
+      )}
     </>
   )
 }
