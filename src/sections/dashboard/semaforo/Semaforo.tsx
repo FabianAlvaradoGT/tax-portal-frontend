@@ -1,4 +1,5 @@
 import type { Theme, SxProps } from '@mui/material'
+import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { toast } from 'sonner'
 import { useState, useEffect } from 'react'
@@ -14,14 +15,13 @@ import {
   TableContainer,
 } from '@mui/material'
 
+import { CircleIcon } from 'src/components/others/CircleIcon'
 import { TableLoading } from 'src/components/table/table-loading'
 import { ComponentBox } from 'src/components/layout/component-box'
 
-import { CircleIcon } from './CircleIcon'
-import { getForms } from './services/useSemaforo'
+import { getForms } from './useSemaforo'
 
-import type { Forms } from './services/useSemaforo'
-import type { Company } from './services/useSearch'
+import type { Forms } from './useSemaforo'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',

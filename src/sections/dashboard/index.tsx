@@ -6,15 +6,15 @@ import Typography from '@mui/material/Typography'
 
 import { DashboardContent } from 'src/layouts/dashboard'
 
-import { Info } from './Info'
-import { Search } from './Search'
-import { Semaforo } from './Semaforo'
-import { Formularios } from './Formularios'
-import { Notificaciones } from './Notificaciones'
-import { getCompanyAll } from './services/useSearch'
-import { DeclaracionesJuradas } from './DeclaracionesJuradas'
+import { Info } from './info/Info'
+import { Search } from './search/Search'
+import { getCompanyAll } from './useSearch'
+import { Semaforo } from './semaforo/Semaforo'
+import { Formularios } from './formularios/Formularios'
+import { Notificaciones } from './notificaciones/Notificaciones'
+import { DeclaracionesJuradas } from './declaraciones-juradas/DeclaracionesJuradas'
 
-import type { Company } from './services/useSearch'
+import type { Company } from './useSearch'
 
 // ----------------------------------------------------------------------
 

@@ -1,18 +1,18 @@
 import type { Theme, SxProps } from '@mui/material'
+import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { toast } from 'sonner'
-import { useState, useEffect } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 
-import { Stack, Button, Divider, TextField, Autocomplete } from '@mui/material'
+import { Stack, Button, Divider, Skeleton, TextField, Autocomplete } from '@mui/material'
 
-import { TablePagination } from 'src/components/table/table'
 import { ComponentBox } from 'src/components/layout/component-box'
+import { ReactTable } from 'src/components/react-table/ReactTableTemplate'
 
-import { YEARS } from './services/useFormularios'
-import { COLUMNS, getDeclaracionesJuradas } from './services/useDeclaracionesJuradas'
+import { DeclaracionesJuradasColumns } from './Columns'
+import { YEARS, getDeclaracionesJuradas } from './useDeclaracionesJuradas'
 
-import type { Company } from './services/useSearch'
-import type { DDJJ } from './services/useDeclaracionesJuradas'
+import type { DDJJ } from './useDeclaracionesJuradas'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
@@ -29,6 +29,7 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Company | n
 
   const [data, setData] = useState<DDJJ[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
   const handleSearch = () => {
     setSearch(true)
@@ -44,6 +45,7 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Company | n
       .catch((err) => {
         const errorMessage = err.detail || 'Error al cargar los datos'
         toast.error(errorMessage)
+        setError(errorMessage)
       })
       .finally(() => {
         setLoading(false)
@@ -56,6 +58,18 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Company | n
       setData([])
     }
   }, [period])
+
+  const columns = DeclaracionesJuradasColumns()
+  const tableColumns = useMemo(
+    () =>
+      loading
+        ? columns.map((column: any) => ({
+            ...column,
+            Cell: <Skeleton />,
+          }))
+        : columns,
+    [loading, columns]
+  )
 
   return (
     <section>
@@ -98,7 +112,15 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Company | n
         {search && (
           <>
             <Divider />
-            <TablePagination columns={COLUMNS} data={data} loading={loading} />
+            <ReactTable
+              columns={tableColumns}
+              data={data}
+              getHeaderProps={(column: any) => column.getSortByToggleProps()}
+              loading={{ table: loading }}
+              error={error ?? false}
+              fieldSortBy={false}
+              orderBy="id"
+            />
           </>
         )}
       </ComponentBox>

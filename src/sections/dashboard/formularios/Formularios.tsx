@@ -1,4 +1,5 @@
 import type { Theme, SxProps } from '@mui/material'
+import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { useState } from 'react'
 
@@ -6,9 +7,7 @@ import { Stack, Button, MenuItem, TextField } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
 
-import { FORMS, YEARS } from './services/useFormularios'
-
-import type { Company } from './services/useSearch'
+import { FORMS, YEARS } from './useFormularios'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',

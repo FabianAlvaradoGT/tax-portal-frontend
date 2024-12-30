@@ -1,12 +1,11 @@
 import type { Theme, SxProps } from '@mui/material'
+import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { useState, useEffect } from 'react'
 
 import { Stack, TextField, Autocomplete } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
-
-import type { Company } from './services/useSearch'
 
 const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',
