@@ -103,7 +103,8 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Company | n
           <Button
             variant="outlined"
             color="success"
-            disabled={!period}
+            // disabled={!period}
+            disabled
             sx={{ backgroundColor: 'background.paper' }}
             fullWidth
             onClick={() => {}}
