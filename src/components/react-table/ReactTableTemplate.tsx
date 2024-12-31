@@ -24,7 +24,6 @@ import {
   TableCell,
   TableHead,
   IconButton,
-  Typography,
   useMediaQuery,
 } from '@mui/material'
 
@@ -340,13 +339,6 @@ export const ReactTable = ({
               <TableRow />
             </>
           )}
-          {error && (
-            <TableRow>
-              <TableCell colSpan={columns.length} align="center">
-                <Typography variant="h6">Error al obtener los datos</Typography>
-              </TableCell>
-            </TableRow>
-          )}
 
           {loading?.table && (
             <TableRow>
@@ -356,10 +348,18 @@ export const ReactTable = ({
             </TableRow>
           )}
 
-          {data.length === 0 && !error && !loading && (
+          {error && (
             <TableRow>
               <TableCell colSpan={columns.length} align="center">
-                <Typography variant="h6">No hay datos</Typography>
+                Error al obtener los datos
+              </TableCell>
+            </TableRow>
+          )}
+
+          {data.length === 0 && !error && !loading?.table && (
+            <TableRow>
+              <TableCell colSpan={columns.length} align="center">
+                No hay datos
               </TableCell>
             </TableRow>
           )}
@@ -393,17 +393,19 @@ export const ReactTable = ({
               </Fragment>
             )
           })}
-          <TableRow sx={{ '&:hover': { bgcolor: 'transparent !important' } }}>
-            <TableCell sx={{ p: 2, py: 3 }} colSpan={9}>
-              <TablePagination
-                gotoPage={gotoPage}
-                rows={rows}
-                setPageSize={setPageSize}
-                pageSize={pageSize}
-                pageIndex={pageIndex}
-              />
-            </TableCell>
-          </TableRow>
+          {data.length > 0 && !loading?.table && !error && (
+            <TableRow sx={{ '&:hover': { bgcolor: 'transparent !important' } }}>
+              <TableCell sx={{ p: 2, py: 1 }} colSpan={9}>
+                <TablePagination
+                  gotoPage={gotoPage}
+                  rows={rows}
+                  setPageSize={setPageSize}
+                  pageSize={pageSize}
+                  pageIndex={pageIndex}
+                />
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </Stack>

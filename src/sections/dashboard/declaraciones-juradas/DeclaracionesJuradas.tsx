@@ -28,6 +28,7 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Company | n
   const handleSearch = () => {
     setSearch(true)
     setLoading(true)
+    setError('')
     setData([])
 
     if (period === '') return
@@ -52,6 +53,12 @@ export function DeclaracionesJuradas({ datos }: { datos: { sociedad: Company | n
       setData([])
     }
   }, [period])
+
+  useEffect(() => {
+    setSearch(false)
+    setPeriod('')
+    setData([])
+  }, [datos.sociedad?.uuid])
 
   const columns = DeclaracionesJuradasColumns()
   const tableColumns = useMemo(

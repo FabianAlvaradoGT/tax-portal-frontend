@@ -1,4 +1,4 @@
-import { EditOutlined } from '@ant-design/icons'
+import { EyeOutlined } from '@ant-design/icons'
 
 import { useTheme } from '@mui/material/styles'
 import { Stack, Tooltip, IconButton } from '@mui/material'
@@ -61,15 +61,18 @@ export const NotificationesColumns = (setDialogSetting: any, openDialog: any): P
             }}
           >
             <IconButton
-              color="success"
+              color="info"
               size="small"
               onClick={(e: any) => {
                 e.stopPropagation()
-                setDialogSetting(row.original.mensaje)
+                setDialogSetting({
+                  content: row.original.mensaje,
+                  title: `Notificación ID ${row.original.id}`,
+                })
                 openDialog.onTrue()
               }}
             >
-              <EditOutlined />
+              <EyeOutlined />
             </IconButton>
           </Tooltip>
         </Stack>

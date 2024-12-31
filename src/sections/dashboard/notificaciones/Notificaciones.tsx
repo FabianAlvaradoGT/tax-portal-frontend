@@ -26,11 +26,15 @@ export function Notificaciones({ datos }: { datos: { sociedad: Company | null } 
   const [error, setError] = useState('')
   const openDialog = useBoolean(false)
 
-  const [dialogSetting, setDialogSetting] = useState('')
+  const [dialogSetting, setDialogSetting] = useState({
+    title: '',
+    content: '',
+  })
 
   const handleSearch = () => {
     setSearch(true)
     setLoading(true)
+    setError('')
     setData([])
 
     if (period === '') return
@@ -55,6 +59,12 @@ export function Notificaciones({ datos }: { datos: { sociedad: Company | null } 
       setData([])
     }
   }, [period])
+
+  useEffect(() => {
+    setSearch(false)
+    setPeriod('')
+    setData([])
+  }, [datos.sociedad?.uuid])
 
   const columns = NotificationesColumns(setDialogSetting, openDialog)
 
