@@ -1,40 +1,74 @@
-interface Forms {
-  uuid: string
-  fuente: string
-  tipo_archivo: string
-}
+import axiosInstance from 'src/lib/axios'
+
+import { F29Columns, F22Columns, F50Columns, F3600Columns } from './Columns'
 
 interface Years {
   value: string
   label: string
 }
 
-export const FORMS: Forms[] = [
-  {
-    fuente: 'SII',
-    tipo_archivo: 'F50',
-    uuid: '8341e73e-8922-4cf0-b384-0f54e8cddec8',
-  },
-  {
-    fuente: 'SII',
-    tipo_archivo: 'F3600',
-    uuid: 'f76736d0-4dd7-4b4c-bb9f-d00399a15744',
-  },
-  {
-    fuente: 'SII',
-    tipo_archivo: 'F29',
-    uuid: 'c771d3f2-48a6-4633-b675-3c8a9a1d6efb',
-  },
-  {
-    fuente: 'APP',
-    tipo_archivo: 'F22',
-    uuid: 'e9138eab-f363-4bb8-9e07-03412c3ac701',
-  },
-]
-
 export const YEARS: Years[] = [
   { value: '2024', label: '2024' },
   { value: '2023', label: '2023' },
   { value: '2022', label: '2022' },
-  { value: '2018', label: '2018' },
 ]
+
+export const forms: {
+  [key: string]: (
+    theme: any,
+    setDialogData: any,
+    openDialog: any,
+    handleDownload: any,
+    info: any
+  ) => any
+} = {
+  F29: (theme: any, setDialogData: any, openDialog, handleDownload, info) =>
+    F29Columns(theme, setDialogData, openDialog, handleDownload, info),
+  F22: (theme: any, setDialogData: any, openDialog, handleDownload, info) =>
+    F22Columns(theme, setDialogData, openDialog, handleDownload, info),
+  F3600: (theme: any, setDialogData: any, openDialog, handleDownload, info) =>
+    F3600Columns(theme, setDialogData, openDialog, handleDownload, info),
+  F50: (theme: any, setDialogData: any, openDialog, handleDownload, info) =>
+    F50Columns(theme, setDialogData, openDialog, handleDownload, info),
+}
+
+export interface TypeForms {
+  uuid: string
+  fuente: string
+  tipo_archivo: string
+}
+
+export const getTypeForms = async (): Promise<TypeForms[]> => {
+  const response = await axiosInstance.get<TypeForms[]>(`/type-files/forms`)
+  return response.data
+}
+
+// ----------------------------------------------------------------------------------------------------
+
+export interface DataObservation {
+  data: { [key: string]: string }
+}
+export interface Observation {
+  form_name: string
+  data: DataObservation[]
+}
+
+export const getObservations = async (
+  uuid_tipo_archivo: string,
+  uuid_sociedad: string,
+  year: string
+): Promise<Observation> => {
+  const response = await axiosInstance.get<Observation>(
+    `/form/get-observation?uuid_tipo_archivo=${uuid_tipo_archivo}&uuid_sociedad=${uuid_sociedad}&year=${year}`
+  )
+  return response.data
+}
+
+// ----------------------------------------------------------------------------------------------------
+
+export const postDownloadDocument = async (payload: object): Promise<Blob> => {
+  const response = await axiosInstance.post<Blob>(`/document/download`, payload, {
+    responseType: 'blob',
+  })
+  return response.data
+}
