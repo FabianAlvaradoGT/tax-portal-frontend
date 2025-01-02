@@ -89,11 +89,11 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
       forms[formName]?.(theme, setDialogData, openDialog, handleDownload, {
         uuid_sociedad: datos.sociedad?.uuid,
         uuid_tipo_archivo: form,
-        period,
+        year: period,
         name: formName,
       }) || [],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formName]
+    [formName, period, form, datos.sociedad?.uuid]
   )
   const tableColumns = useMemo(
     () =>
@@ -159,7 +159,6 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
       })
       .catch((err) => {
         const errorMessage = err.detail || 'Error al cargar los datos'
-        toast.error(errorMessage)
         setError({
           ...error,
           data: errorMessage,

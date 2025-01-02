@@ -351,7 +351,7 @@ export const ReactTable = ({
           {error && (
             <TableRow>
               <TableCell colSpan={columns.length} align="center">
-                Error al obtener los datos
+                {error || 'Error al cargar los datos'}
               </TableCell>
             </TableRow>
           )}

@@ -100,12 +100,11 @@ export const F50Columns = (
             variant="outlined"
             startIcon={<FileExcelOutlined />}
             onClick={() => {
-              console.log('info', info)
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
                 uuid_tipo_archivo: info.uuid_tipo_archivo,
                 extension_file: 'xlsx',
-                period: info.period + `${row.original.mes}`.padStart(2, '0'),
+                period: info.year + `${row.original.mes}`.padStart(2, '0'),
                 name: info.name,
               }
               handleDownload(payload)
@@ -133,12 +132,11 @@ export const F50Columns = (
             variant="outlined"
             startIcon={<FilePdfOutlined />}
             onClick={() => {
-              console.log('info', info)
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
                 uuid_tipo_archivo: info.uuid_tipo_archivo,
                 extension_file: 'pdf',
-                period: info.period + `${row.original.mes}`.padStart(2, '0'),
+                period: info.year + `${row.original.mes}`.padStart(2, '0'),
                 name: info.name,
               }
               handleDownload(payload)
@@ -239,12 +237,11 @@ export const F3600Columns = (
             variant="outlined"
             startIcon={<FileExcelOutlined />}
             onClick={() => {
-              console.log('info', info)
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
                 uuid_tipo_archivo: info.uuid_tipo_archivo,
                 extension_file: 'xlsx',
-                period: info.period + `${row.original.mes}`.padStart(2, '0'),
+                period: info.year + `${row.original.mes}`.padStart(2, '0'),
                 name: info.name,
               }
               handleDownload(payload)
@@ -272,12 +269,11 @@ export const F3600Columns = (
             variant="outlined"
             startIcon={<FilePdfOutlined />}
             onClick={() => {
-              console.log('info', info)
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
                 uuid_tipo_archivo: info.uuid_tipo_archivo,
                 extension_file: 'pdf',
-                period: info.period + `${row.original.mes}`.padStart(2, '0'),
+                period: info.year + `${row.original.mes}`.padStart(2, '0'),
                 name: info.name,
               }
               handleDownload(payload)
@@ -381,12 +377,11 @@ export const F29Columns = (
             variant="outlined"
             startIcon={<FileExcelOutlined />}
             onClick={() => {
-              console.log('info', info)
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
                 uuid_tipo_archivo: info.uuid_tipo_archivo,
                 extension_file: 'xlsx',
-                period: info.period + `${row.original.mes}`.padStart(2, '0'),
+                period: info.year + `${row.original.mes}`.padStart(2, '0'),
                 name: info.name,
               }
               handleDownload(payload)
@@ -414,12 +409,11 @@ export const F29Columns = (
             variant="outlined"
             startIcon={<FilePdfOutlined />}
             onClick={() => {
-              console.log('info', info)
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
                 uuid_tipo_archivo: info.uuid_tipo_archivo,
                 extension_file: 'pdf',
-                period: info.period + `${row.original.mes}`.padStart(2, '0'),
+                period: info.year + `${row.original.mes}`.padStart(2, '0'),
                 name: info.name,
               }
               handleDownload(payload)
@@ -523,12 +517,11 @@ export const F22Columns = (
             variant="outlined"
             startIcon={<FileExcelOutlined />}
             onClick={() => {
-              console.log('info', info)
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
                 uuid_tipo_archivo: info.uuid_tipo_archivo,
                 extension_file: 'xlsx',
-                period: info.period + `${row.original.mes}`.padStart(2, '0'),
+                period: info.year + `${row.original.mes}`.padStart(2, '0'),
                 name: info.name,
               }
               handleDownload(payload)
@@ -556,12 +549,11 @@ export const F22Columns = (
             variant="outlined"
             startIcon={<FilePdfOutlined />}
             onClick={() => {
-              console.log('info', info)
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
                 uuid_tipo_archivo: info.uuid_tipo_archivo,
                 extension_file: 'pdf',
-                period: info.period + `${row.original.mes}`.padStart(2, '0'),
+                period: info.year + `${row.original.mes}`.padStart(2, '0'),
                 name: info.name,
               }
               handleDownload(payload)
