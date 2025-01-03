@@ -45,13 +45,17 @@ export function Semaforo({ datos }: { datos: { sociedad: Company | null } }) {
             <TableHead>
               <TableRow>
                 <TableCell align="center" />
-                {Array.from({ length: maxPeriod - minPeriod + 1 }, (_, i) => i + minPeriod)
-                  .sort((a, b) => b - a)
-                  .map((period) => (
-                    <TableCell key={period} align="center">
-                      <b>{period}</b>
-                    </TableCell>
-                  ))}
+                {!forms.isFetching && (
+                  <>
+                    {Array.from({ length: maxPeriod - minPeriod + 1 }, (_, i) => i + minPeriod)
+                      .sort((a, b) => b - a)
+                      .map((period) => (
+                        <TableCell key={period} align="center">
+                          <b>{period}</b>
+                        </TableCell>
+                      ))}
+                  </>
+                )}
               </TableRow>
               <TableRow />
             </TableHead>
@@ -81,39 +85,31 @@ export function Semaforo({ datos }: { datos: { sociedad: Company | null } }) {
               )}
 
               {forms.data.length > 0 &&
-                forms.data.map(
-                  (
-                    item: {
-                      form_name: string
-                      data: { periodo: number; observaciones: number }[]
-                    },
-                    index: number
-                  ) => (
-                    <TableRow key={index}>
-                      <TableCell>{item.form_name}</TableCell>
+                forms.data.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{item.form_name}</TableCell>
 
-                      {Array.from({ length: maxPeriod - minPeriod + 1 }, (_, i) => i + minPeriod)
-                        .sort((a, b) => b - a)
-                        .map((period, indexRow) => {
-                          const countObservaciones =
-                            item.data.find((entry) => entry.periodo === period)?.observaciones || 0
-                          const colors =
-                            countObservaciones === 0
-                              ? theme.palette.success.main
-                              : countObservaciones < 3
-                                ? theme.palette.warning.light
-                                : theme.palette.error.main
-                          return (
-                            <TableCell key={indexRow} align="center">
-                              <Tooltip title={`Observaciones: ${countObservaciones}`}>
-                                <CircleIcon color={colors} height={30} width={30} />
-                              </Tooltip>
-                            </TableCell>
-                          )
-                        })}
-                    </TableRow>
-                  )
-                )}
+                    {Array.from({ length: maxPeriod - minPeriod + 1 }, (_, i) => i + minPeriod)
+                      .sort((a, b) => b - a)
+                      .map((period, indexRow) => {
+                        const countObservaciones =
+                          item.data.find((el) => el.periodo === period)?.observaciones || 0
+                        const colors =
+                          countObservaciones === 0
+                            ? theme.palette.success.main
+                            : countObservaciones < 3
+                              ? theme.palette.warning.light
+                              : theme.palette.error.main
+                        return (
+                          <TableCell key={indexRow} align="center">
+                            <Tooltip title={`Observaciones: ${countObservaciones}`}>
+                              <CircleIcon color={colors} height={30} width={30} />
+                            </Tooltip>
+                          </TableCell>
+                        )
+                      })}
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
