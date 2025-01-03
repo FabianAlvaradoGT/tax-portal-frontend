@@ -12,15 +12,15 @@ export interface Forms {
   ]
 }
 
-export const getForms = async (uuid_sociedad: string): Promise<Forms[]> => {
-  const response = await axiosInstance.get<Forms[]>(`/form/get-forms/${uuid_sociedad}`)
+export const getForms = async (uuid_sociedad: string, signal: AbortSignal): Promise<Forms[]> => {
+  const response = await axiosInstance.get<Forms[]>(`/form/get-forms/${uuid_sociedad}`, { signal })
   return response.data
 }
 
 export function useGetForms(uuid_sociedad: string) {
   return useQuery<Forms[], { detail: string }>({
     queryKey: ['forms', uuid_sociedad],
-    queryFn: () => getForms(uuid_sociedad),
+    queryFn: ({ signal }) => getForms(uuid_sociedad, signal),
     initialData: [],
     retry: 0,
   })

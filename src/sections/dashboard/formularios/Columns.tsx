@@ -2,6 +2,21 @@ import { EyeOutlined, FilePdfOutlined, FileExcelOutlined } from '@ant-design/ico
 
 import { Stack, Button, Tooltip, IconButton } from '@mui/material'
 
+const monthNames: { [key: string]: string } = {
+  '1': 'Enero',
+  '2': 'Febrero',
+  '3': 'Marzo',
+  '4': 'Abril',
+  '5': 'Mayo',
+  '6': 'Junio',
+  '7': 'Julio',
+  '8': 'Agosto',
+  '9': 'Septiembre',
+  '10': 'Octubre',
+  '11': 'Noviembre',
+  '12': 'Diciembre',
+}
+
 interface Props {
   Header: string
   accessor?: string
@@ -20,11 +35,13 @@ export const F50Columns = (
   setDialogData: any,
   openDialog: any,
   handleDownload: any,
-  info: any
+  info: any,
+  disableButtons: boolean
 ): Props[] => [
   {
     Header: 'Mes',
     accessor: 'mes',
+    Cell: ({ row, table }: any) => monthNames[row.original.mes],
   },
   {
     Header: 'Estado',
@@ -99,6 +116,7 @@ export const F50Columns = (
             size="small"
             variant="outlined"
             startIcon={<FileExcelOutlined />}
+            disabled={disableButtons}
             onClick={() => {
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
@@ -131,6 +149,7 @@ export const F50Columns = (
             size="small"
             variant="outlined"
             startIcon={<FilePdfOutlined />}
+            disabled={disableButtons}
             onClick={() => {
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
@@ -156,11 +175,13 @@ export const F3600Columns = (
   setDialogData: any,
   openDialog: any,
   handleDownload: any,
-  info: any
+  info: any,
+  disableButtons: boolean
 ): Props[] => [
   {
     Header: 'Mes',
     accessor: 'mes',
+    Cell: ({ row, table }: any) => monthNames[row.original.mes],
   },
   {
     Header: 'Estado',
@@ -236,6 +257,7 @@ export const F3600Columns = (
             size="small"
             variant="outlined"
             startIcon={<FileExcelOutlined />}
+            disabled={disableButtons}
             onClick={() => {
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
@@ -268,6 +290,7 @@ export const F3600Columns = (
             size="small"
             variant="outlined"
             startIcon={<FilePdfOutlined />}
+            disabled={disableButtons}
             onClick={() => {
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
@@ -293,11 +316,13 @@ export const F29Columns = (
   setDialogData: any,
   openDialog: any,
   handleDownload: any,
-  info: any
+  info: any,
+  disableButtons: boolean
 ): Props[] => [
   {
     Header: 'Mes',
     accessor: 'mes',
+    Cell: ({ row, table }: any) => monthNames[row.original.mes],
   },
   {
     Header: 'Estado',
@@ -376,6 +401,7 @@ export const F29Columns = (
             size="small"
             variant="outlined"
             startIcon={<FileExcelOutlined />}
+            disabled={disableButtons}
             onClick={() => {
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
@@ -408,6 +434,7 @@ export const F29Columns = (
             size="small"
             variant="outlined"
             startIcon={<FilePdfOutlined />}
+            disabled={disableButtons}
             onClick={() => {
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
@@ -433,11 +460,13 @@ export const F22Columns = (
   setDialogData: any,
   openDialog: any,
   handleDownload: any,
-  info: any
+  info: any,
+  disableButtons: boolean
 ): Props[] => [
   {
     Header: 'Mes',
     accessor: 'mes',
+    Cell: ({ row, table }: any) => monthNames[row.original.mes],
   },
   {
     Header: 'Estado',
@@ -516,6 +545,7 @@ export const F22Columns = (
             size="small"
             variant="outlined"
             startIcon={<FileExcelOutlined />}
+            disabled={disableButtons}
             onClick={() => {
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,
@@ -548,6 +578,7 @@ export const F22Columns = (
             size="small"
             variant="outlined"
             startIcon={<FilePdfOutlined />}
+            disabled={disableButtons}
             onClick={() => {
               const payload = {
                 uuid_sociedad: info.uuid_sociedad,

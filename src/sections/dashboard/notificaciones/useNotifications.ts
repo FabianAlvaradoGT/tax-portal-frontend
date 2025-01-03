@@ -19,15 +19,20 @@ export interface Notification {
   fecha_insercion: string
 }
 
-export const getNotification = async (uuid_sociedad: string): Promise<Notification[]> => {
-  const response = await axiosInstance.get<Notification[]>(`/notification/${uuid_sociedad}`)
+export const getNotification = async (
+  uuid_sociedad: string,
+  signal: AbortSignal
+): Promise<Notification[]> => {
+  const response = await axiosInstance.get<Notification[]>(`/notification/${uuid_sociedad}`, {
+    signal,
+  })
   return response.data
 }
 
 export function useNotifications(uuid_sociedad: string) {
   return useQuery<Notification[], { detail: string }>({
-    queryKey: ['notifications', uuid_sociedad],
-    queryFn: () => getNotification(uuid_sociedad),
+    queryKey: ['notifications'],
+    queryFn: ({ signal }) => getNotification(uuid_sociedad, signal),
     initialData: [],
     retry: 0,
     enabled: false,

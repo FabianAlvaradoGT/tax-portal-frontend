@@ -19,16 +19,19 @@ export interface DDJJ {
 
 export const getDeclaracionesJuradas = async (
   uuid_sociedad: string,
-  period: string
+  period: string,
+  signal: AbortSignal
 ): Promise<DDJJ[]> => {
-  const response = await axiosInstance.get<DDJJ[]>(`/ddjj/get-ddjj/${uuid_sociedad}/${period}`)
+  const response = await axiosInstance.get<DDJJ[]>(`/ddjj/get-ddjj/${uuid_sociedad}/${period}`, {
+    signal,
+  })
   return response.data
 }
 
 export function useDeclaracionesJuradas(uuid_sociedad: string, period: string) {
   return useQuery<DDJJ[], { detail: string }>({
     queryKey: ['declaraciones-juradas'],
-    queryFn: () => getDeclaracionesJuradas(uuid_sociedad, period),
+    queryFn: ({ signal }) => getDeclaracionesJuradas(uuid_sociedad, period, signal),
     enabled: false,
     initialData: [] as DDJJ[],
     retry: 0,

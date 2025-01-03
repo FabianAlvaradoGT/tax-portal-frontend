@@ -1,12 +1,12 @@
 import type { Company } from 'src/sections/dashboard/useSearch'
 
 import { toast } from 'sonner'
+import { useState, useEffect } from 'react'
 import { useBoolean } from 'minimal-shared/hooks'
-import { useMemo, useState, useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { useTheme } from '@mui/material/styles'
-import { Stack, Button, Divider, Skeleton, TextField, Autocomplete } from '@mui/material'
+import { Stack, Button, Divider, TextField, Autocomplete } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
 import { ReactTable } from 'src/components/react-table/ReactTableTemplate'
@@ -84,27 +84,20 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
     )
   }
 
-  const columns = useMemo(
-    () =>
-      forms[formName]?.(theme, setDialogData, openDialog, handleDownload, {
+  const columns =
+    forms[formName]?.(
+      theme,
+      setDialogData,
+      openDialog,
+      handleDownload,
+      {
         uuid_sociedad: datos.sociedad?.uuid,
         uuid_tipo_archivo: form,
         year: period,
         name: formName,
-      }) || [],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formName, period, form, datos.sociedad?.uuid]
-  )
-  const tableColumns = useMemo(
-    () =>
-      observations.isLoading
-        ? columns.map((column: any) => ({
-            ...column,
-            Cell: <Skeleton />,
-          }))
-        : columns,
-    [observations.isLoading, columns]
-  )
+      },
+      downloadDocument.isPending
+    ) || []
 
   useEffect(() => {
     if (typesForms.isError) {
@@ -191,7 +184,7 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
           <>
             <Divider />
             <ReactTable
-              columns={tableColumns}
+              columns={columns}
               data={observations.data?.data || ([] as Observation[])}
               getHeaderProps={(column: any) => column.getSortByToggleProps()}
               loading={{ table: observations.isFetching }}
