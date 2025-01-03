@@ -8,20 +8,17 @@ import { ComponentBox } from 'src/components/layout/component-box'
 
 import { componentBoxStyles } from 'src/sections/dashboard/index'
 
-export function Search({
-  datos,
-}: {
-  datos: { sociedad: Company | null; setSociedad: any; data: Company[]; loading: boolean }
-}) {
-  const { sociedad, setSociedad, data, loading } = datos
+import { useDashboard } from '../dashboardContext'
+
+export function Search({ datos }: { datos: { sociedad: Company | null; setSociedad: any } }) {
+  const { company } = useDashboard()
+  const { sociedad, setSociedad } = datos
   const [options, setOptions] = useState<Company[]>([])
   const [inputValue, setInputValue] = useState('')
 
   useEffect(() => {
-    if (data) {
-      setOptions(data)
-    }
-  }, [data])
+    setOptions(company.data || [])
+  }, [company.data])
 
   return (
     <section style={{ marginTop: '25px' }}>
@@ -37,12 +34,13 @@ export function Search({
               const target = e.target.value
 
               if (target === '') {
-                setOptions(data)
+                setOptions(company.data || [])
                 setSociedad(null)
                 return
               }
 
-              const societiesFind = data.filter((society) => society.rut.includes(target))
+              const societiesFind =
+                company.data?.filter((society) => society.rut.includes(target)) || []
               setOptions(societiesFind)
               setSociedad(societiesFind.length > 0 ? societiesFind[0] : null)
             }}
@@ -54,7 +52,7 @@ export function Search({
             sx={{ backgroundColor: 'background.paper' }}
             fullWidth
             value={sociedad || null}
-            loading={loading}
+            loading={company.isFetching}
             loadingText="Cargando..."
             options={options}
             getOptionLabel={(option) => option.razon_social}

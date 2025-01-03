@@ -364,35 +364,41 @@ export const ReactTable = ({
             </TableRow>
           )}
 
-          {page.map((row: any, i: number) => {
-            prepareRow(row)
-            const rowProps = row.getRowProps()
+          {!loading?.table &&
+            !error &&
+            page.map((row: any, i: number) => {
+              prepareRow(row)
+              const rowProps = row.getRowProps()
 
-            return (
-              <Fragment key={'data_' + i}>
-                <TableRow {...row.getRowProps()} sx={{ bgcolor: 'inherit' }} key={'data_row_' + i}>
-                  {row.cells.map((cell: any, indexCell: any) => {
-                    const cellCenter =
-                      cell.column.className === 'cell-center' ? { textAlign: 'center' } : {}
-                    const unselectCell = unselect ? { userSelect: 'none' } : {}
-                    const sxCell = { ...cellCenter, ...unselectCell }
+              return (
+                <Fragment key={'data_' + i}>
+                  <TableRow
+                    {...row.getRowProps()}
+                    sx={{ bgcolor: 'inherit' }}
+                    key={'data_row_' + i}
+                  >
+                    {row.cells.map((cell: any, indexCell: any) => {
+                      const cellCenter =
+                        cell.column.className === 'cell-center' ? { textAlign: 'center' } : {}
+                      const unselectCell = unselect ? { userSelect: 'none' } : {}
+                      const sxCell = { ...cellCenter, ...unselectCell }
 
-                    return (
-                      <TableCell
-                        onDoubleClick={() => doubleClick && doubleClick(row)}
-                        {...cell.getCellProps([{ className: cell.column.className }])}
-                        key={`data_cell_${i}_${indexCell}`}
-                        sx={sxCell}
-                      >
-                        {cell.render('Cell')}
-                      </TableCell>
-                    )
-                  })}
-                </TableRow>
-                {row.isExpanded && renderRowSubComponent({ row, rowProps, visibleColumns })}
-              </Fragment>
-            )
-          })}
+                      return (
+                        <TableCell
+                          onDoubleClick={() => doubleClick && doubleClick(row)}
+                          {...cell.getCellProps([{ className: cell.column.className }])}
+                          key={`data_cell_${i}_${indexCell}`}
+                          sx={sxCell}
+                        >
+                          {cell.render('Cell')}
+                        </TableCell>
+                      )
+                    })}
+                  </TableRow>
+                  {row.isExpanded && renderRowSubComponent({ row, rowProps, visibleColumns })}
+                </Fragment>
+              )
+            })}
           {data.length > 0 && !loading?.table && !error && (
             <TableRow sx={{ '&:hover': { bgcolor: 'transparent !important' } }}>
               <TableCell sx={{ p: 2, py: 1 }} colSpan={9}>

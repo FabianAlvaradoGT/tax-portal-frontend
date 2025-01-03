@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+
 import axiosInstance from 'src/lib/axios'
 
 export interface Company {
@@ -13,4 +15,8 @@ export interface Company {
 export const getCompanyAll = async (): Promise<Company[]> => {
   const response = await axiosInstance.get<Company[]>(`/company/all`)
   return response.data
+}
+
+export function useCompany() {
+  return useQuery({ queryKey: ['companies'], queryFn: getCompanyAll, initialData: [] })
 }

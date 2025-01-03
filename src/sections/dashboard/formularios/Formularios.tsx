@@ -3,6 +3,7 @@ import type { Company } from 'src/sections/dashboard/useSearch'
 import { toast } from 'sonner'
 import { useBoolean } from 'minimal-shared/hooks'
 import { useMemo, useState, useEffect } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { useTheme } from '@mui/material/styles'
 import { Stack, Button, Divider, Skeleton, TextField, Autocomplete } from '@mui/material'
@@ -13,9 +14,10 @@ import { ReactTable } from 'src/components/react-table/ReactTableTemplate'
 import { componentBoxStyles } from 'src/sections/dashboard/index'
 
 import { DialogFormularios } from './DialogF29'
-import { YEARS, forms, getTypeForms, getObservations, postDownloadDocument } from './useFormularios'
+import { useDashboard } from '../dashboardContext'
+import { YEARS, forms, useGetObservations, useDownloadDocument } from './useFormularios'
 
-import type { TypeForms, DataObservation } from './useFormularios'
+import type { Observation } from './useFormularios'
 
 interface DialogData {
   title?: string
@@ -24,28 +26,22 @@ interface DialogData {
 
 export function Formularios({ datos }: { datos: { sociedad: Company | null } }) {
   const theme = useTheme()
+  const queryClient = useQueryClient()
   const [period, setPeriod] = useState('')
   const [form, setForm] = useState('')
   const [search, setSearch] = useState(false)
   const openDialog = useBoolean(false)
+
+  const { typesForms, company } = useDashboard()
+  const observations = useGetObservations(form, datos.sociedad?.uuid || '', period)
+  const downloadDocument = useDownloadDocument()
 
   const [dialogData, setDialogData] = useState<DialogData>({
     title: '',
     content: [],
   })
 
-  const [dataTypeForms, setDataTypeForms] = useState<TypeForms[]>([])
-  const [data, setData] = useState<DataObservation[]>([])
-  const [loading, setLoading] = useState({
-    typeForm: false,
-    data: false,
-  })
-  const [error, setError] = useState({
-    typeForm: '',
-    data: '',
-  })
-
-  const formName = dataTypeForms.find((option) => option.uuid === form)?.tipo_archivo || ''
+  const formName = typesForms.data?.find((option) => option.uuid === form)?.tipo_archivo || ''
   const handleDownload = async (infoPayload: {
     uuid_sociedad: string
     uuid_tipo_archivo: string
@@ -54,34 +50,38 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
     name: string
   }) => {
     const payload = {
-      uuid_tipo_archivo: infoPayload.uuid_tipo_archivo,
-      uuid_sociedad: infoPayload.uuid_sociedad,
-      period: infoPayload.period,
-      extension_file: infoPayload.extension_file,
+      ...infoPayload,
     }
 
     const toastId = toast.loading('Descargando archivo...')
 
-    try {
-      const response = await postDownloadDocument(payload)
+    downloadDocument.mutate(
+      { ...payload },
+      {
+        onSuccess: (blob) => {
+          const blobURL = URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = blobURL
 
-      const downloadUrl = window.URL.createObjectURL(response)
-      const link = document.createElement('a')
-      link.href = downloadUrl
-      link.setAttribute(
-        'download',
-        `${infoPayload.name}_${infoPayload.period}.${infoPayload.extension_file}`
-      )
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
-      window.URL.revokeObjectURL(downloadUrl)
+          const nameCompany =
+            company.data?.find((c) => c.uuid === infoPayload.uuid_sociedad)?.razon_social ||
+            'empresa'
 
-      toast.success('Archivo descargado exitosamente!', { id: toastId })
-    } catch (e) {
-      toast.error('Error al descargar el archivo. Intenta nuevamente.', { id: toastId })
-      console.error(e)
-    }
+          link.setAttribute(
+            'download',
+            `${nameCompany}_${infoPayload.name}_${infoPayload.period}.${infoPayload.extension_file}`
+          )
+          document.body.appendChild(link)
+          link.click()
+          link.remove()
+          URL.revokeObjectURL(blobURL)
+          toast.success('Archivo descargado exitosamente!', { id: toastId })
+        },
+        onError: (error) => {
+          toast.error('Error al descargar el archivo. Intenta nuevamente.', { id: toastId })
+        },
+      }
+    )
   }
 
   const columns = useMemo(
@@ -97,79 +97,35 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
   )
   const tableColumns = useMemo(
     () =>
-      loading.data
+      observations.isLoading
         ? columns.map((column: any) => ({
             ...column,
             Cell: <Skeleton />,
           }))
         : columns,
-    [loading.data, columns]
+    [observations.isLoading, columns]
   )
 
   useEffect(() => {
-    setSearch(true)
-    setLoading({
-      ...loading,
-      typeForm: true,
-    })
-    setError({
-      ...error,
-      typeForm: '',
-    })
-    setDataTypeForms([])
-
-    getTypeForms()
-      .then((d) => {
-        setDataTypeForms(d)
-      })
-      .catch((err) => {
-        const errorMessage = err.detail || 'Error al cargar los datos'
-        toast.error(errorMessage)
-        setError({
-          ...error,
-          typeForm: errorMessage,
-        })
-      })
-      .finally(() => {
-        setLoading({
-          ...loading,
-          typeForm: false,
-        })
-      })
+    if (typesForms.isError) {
+      const errorMessage = typesForms.error || 'Error al cargar los datos'
+      toast.error(errorMessage.message)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [typesForms.isError])
 
   const handleSearch = () => {
     setSearch(true)
-    setLoading({
-      ...loading,
-      data: true,
-    })
-    setError({
-      ...error,
-      data: '',
-    })
-    setData([])
+    queryClient.resetQueries({ queryKey: ['observations'] })
 
     if (period === '' || form === '') return
 
-    getObservations(form, datos.sociedad?.uuid || '', period)
-      .then((d) => {
-        setData(d.data)
-      })
-      .catch((err) => {
-        const errorMessage = err.detail || 'Error al cargar los datos'
-        setError({
-          ...error,
-          data: errorMessage,
-        })
-      })
-      .finally(() => {
-        setLoading({
-          ...loading,
-          data: false,
-        })
-      })
+    observations.refetch()
+
+    if (observations.isError) {
+      const errorMessage = observations.error || 'Error al cargar los datos'
+      toast.error(errorMessage.detail)
+    }
   }
 
   useEffect(() => {
@@ -189,17 +145,18 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
         <Stack spacing={2} direction="row">
           <Autocomplete
             id="forms"
-            options={dataTypeForms}
+            options={typesForms.data || []}
             size="small"
             sx={{ backgroundColor: 'background.paper' }}
             fullWidth
-            value={dataTypeForms.find((option) => option.uuid === form) || null}
+            value={typesForms.data?.find((option) => option.uuid === form) || null}
             getOptionLabel={(option) => option.tipo_archivo}
             renderInput={(params) => <TextField {...params} label="Reportes" variant="outlined" />}
+            loading={typesForms.isFetching}
             onChange={(event, newValue) => {
               setForm(newValue?.uuid || '')
-              setData([])
               setSearch(false)
+              queryClient.resetQueries({ queryKey: ['observations'] })
             }}
           />
 
@@ -214,8 +171,8 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
             renderInput={(params) => <TextField {...params} label="Periodo" variant="outlined" />}
             onChange={(event, newValue) => {
               setPeriod(newValue?.value || '')
-              setData([])
               setSearch(false)
+              queryClient.resetQueries({ queryKey: ['observations'] })
             }}
           />
 
@@ -235,10 +192,10 @@ export function Formularios({ datos }: { datos: { sociedad: Company | null } }) 
             <Divider />
             <ReactTable
               columns={tableColumns}
-              data={data}
+              data={observations.data?.data || ([] as Observation[])}
               getHeaderProps={(column: any) => column.getSortByToggleProps()}
-              loading={{ table: loading.data }}
-              error={error.data ?? false}
+              loading={{ table: observations.isFetching }}
+              error={observations.isError ? observations.error.detail : null}
               fieldSortBy={false}
               orderBy="mes"
             />

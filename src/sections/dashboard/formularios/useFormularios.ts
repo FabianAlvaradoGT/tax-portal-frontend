@@ -1,6 +1,10 @@
+import { useQuery, useMutation } from '@tanstack/react-query'
+
 import axiosInstance from 'src/lib/axios'
 
 import { F29Columns, F22Columns, F50Columns, F3600Columns } from './Columns'
+
+// ----------------------------------------------------------------------------------------------------
 
 interface Years {
   value: string
@@ -43,6 +47,10 @@ export const getTypeForms = async (): Promise<TypeForms[]> => {
   return response.data
 }
 
+export function useTypesForms() {
+  return useQuery({ queryKey: ['typeForms'], queryFn: getTypeForms, initialData: [] })
+}
+
 // ----------------------------------------------------------------------------------------------------
 
 export interface DataObservation {
@@ -64,6 +72,16 @@ export const getObservations = async (
   return response.data
 }
 
+export function useGetObservations(uuid_tipo_archivo: string, uuid_sociedad: string, year: string) {
+  return useQuery<Observation, { detail: string }>({
+    queryKey: ['observations'],
+    queryFn: () => getObservations(uuid_tipo_archivo, uuid_sociedad, year),
+    enabled: false,
+    initialData: {} as Observation,
+    retry: 0,
+  })
+}
+
 // ----------------------------------------------------------------------------------------------------
 
 export const postDownloadDocument = async (payload: object): Promise<Blob> => {
@@ -71,4 +89,10 @@ export const postDownloadDocument = async (payload: object): Promise<Blob> => {
     responseType: 'blob',
   })
   return response.data
+}
+
+export function useDownloadDocument() {
+  return useMutation<Blob, { detail: string }, object>({
+    mutationFn: (payload: object) => postDownloadDocument(payload),
+  })
 }

@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+
 import axiosInstance from 'src/lib/axios'
 
 export const YEARS = [
@@ -20,4 +22,14 @@ export interface Notification {
 export const getNotification = async (uuid_sociedad: string): Promise<Notification[]> => {
   const response = await axiosInstance.get<Notification[]>(`/notification/${uuid_sociedad}`)
   return response.data
+}
+
+export function useNotifications(uuid_sociedad: string) {
+  return useQuery<Notification[], { detail: string }>({
+    queryKey: ['notifications', uuid_sociedad],
+    queryFn: () => getNotification(uuid_sociedad),
+    initialData: [],
+    retry: 0,
+    enabled: false,
+  })
 }

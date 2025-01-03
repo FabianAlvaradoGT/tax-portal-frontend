@@ -6,9 +6,13 @@ import { ComponentBox } from 'src/components/layout/component-box'
 
 import { componentBoxStyles } from 'src/sections/dashboard/index'
 
-export function Info({ datos }: { datos: { sociedad: Company | null; data: Company[] } }) {
-  const { sociedad, data } = datos
-  const societyFind = data.find((society) => society?.razon_social === sociedad?.razon_social)
+import { useDashboard } from '../dashboardContext'
+
+export function Info({ datos }: { datos: { sociedad: Company | null } }) {
+  const { sociedad } = datos
+  const { company } = useDashboard()
+  const societyFind =
+    company.data?.find((society) => society?.razon_social === sociedad?.razon_social) || null
 
   return (
     <section style={{ marginTop: '25px' }}>
