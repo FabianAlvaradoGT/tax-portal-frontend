@@ -1,4 +1,4 @@
-import type { Company } from 'src/sections/dashboard/useSearch'
+import type { Company } from 'src/sections/dashboard/dashboardService'
 
 import { useTheme } from '@mui/material/styles'
 import {
@@ -17,7 +17,7 @@ import { ComponentBox } from 'src/components/layout/component-box'
 
 import { componentBoxStyles } from 'src/sections/dashboard/index'
 
-import { useGetForms } from './useSemaforo'
+import { useGetForms } from './SemaforoService'
 
 export function Semaforo({ datos }: { datos: { sociedad: Company | null } }) {
   const theme = useTheme()

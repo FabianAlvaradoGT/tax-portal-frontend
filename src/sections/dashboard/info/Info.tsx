@@ -1,12 +1,11 @@
-import type { Company } from 'src/sections/dashboard/useSearch'
+import type { Company } from 'src/sections/dashboard/dashboardService'
 
 import { Stack, Alert, TextField } from '@mui/material'
 
 import { ComponentBox } from 'src/components/layout/component-box'
 
 import { componentBoxStyles } from 'src/sections/dashboard/index'
-
-import { useDashboard } from '../dashboardContext'
+import { useDashboard } from 'src/sections/dashboard/dashboardContext'
 
 export function Info({ datos }: { datos: { sociedad: Company | null } }) {
   const { sociedad } = datos

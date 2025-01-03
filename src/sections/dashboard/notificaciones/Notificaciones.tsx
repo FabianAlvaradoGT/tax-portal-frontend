@@ -1,4 +1,4 @@
-import type { Company } from 'src/sections/dashboard/useSearch'
+import type { Company } from 'src/sections/dashboard/dashboardService'
 
 import { toast } from 'sonner'
 import { useBoolean } from 'minimal-shared/hooks'
@@ -14,7 +14,7 @@ import { ReactTable } from 'src/components/react-table/ReactTableTemplate'
 import { componentBoxStyles } from 'src/sections/dashboard/index'
 
 import { NotificationesColumns } from './Columns'
-import { YEARS, useNotifications } from './useNotifications'
+import { YEARS, useNotifications } from './NotificationsService'
 
 export function Notificaciones({ datos }: { datos: { sociedad: Company | null } }) {
   const queryClient = useQueryClient()

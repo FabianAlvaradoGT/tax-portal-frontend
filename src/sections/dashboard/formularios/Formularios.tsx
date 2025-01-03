@@ -1,4 +1,4 @@
-import type { Company } from 'src/sections/dashboard/useSearch'
+import type { Company } from 'src/sections/dashboard/dashboardService'
 
 import { toast } from 'sonner'
 import { useState, useEffect } from 'react'
@@ -12,12 +12,12 @@ import { ComponentBox } from 'src/components/layout/component-box'
 import { ReactTable } from 'src/components/react-table/ReactTableTemplate'
 
 import { componentBoxStyles } from 'src/sections/dashboard/index'
+import { useDashboard } from 'src/sections/dashboard/dashboardContext'
 
 import { DialogFormularios } from './DialogF29'
-import { useDashboard } from '../dashboardContext'
-import { YEARS, forms, useGetObservations, useDownloadDocument } from './useFormularios'
+import { YEARS, forms, useGetObservations, useDownloadDocument } from './FormulariosService'
 
-import type { Observation } from './useFormularios'
+import type { Observation } from './FormulariosService'
 
 interface DialogData {
   title?: string

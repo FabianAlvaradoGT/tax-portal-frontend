@@ -15,7 +15,7 @@ import { Formularios } from './formularios/Formularios'
 import { Notificaciones } from './notificaciones/Notificaciones'
 import { DeclaracionesJuradas } from './declaraciones-juradas/DeclaracionesJuradas'
 
-import type { Company } from './useSearch'
+import type { Company } from './dashboardService'
 
 export const componentBoxStyles: SxProps<Theme> = {
   flexDirection: 'column',

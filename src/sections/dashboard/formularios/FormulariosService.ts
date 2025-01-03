@@ -37,21 +37,6 @@ export const forms: {
     F50Columns(theme, setDialogData, openDialog, handleDownload, info, disableButtons),
 }
 
-export interface TypeForms {
-  uuid: string
-  fuente: string
-  tipo_archivo: string
-}
-
-export const getTypeForms = async (): Promise<TypeForms[]> => {
-  const response = await axiosInstance.get<TypeForms[]>(`/type-files/forms`)
-  return response.data
-}
-
-export function useTypesForms() {
-  return useQuery({ queryKey: ['typeForms'], queryFn: getTypeForms, initialData: [] })
-}
-
 // ----------------------------------------------------------------------------------------------------
 
 export interface DataObservation {

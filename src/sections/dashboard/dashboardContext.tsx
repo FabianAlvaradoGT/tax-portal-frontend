@@ -4,8 +4,7 @@ import type { UseQueryResult, QueryObserverResult } from '@tanstack/react-query'
 
 import { useContext, createContext } from 'react'
 
-import { useCompany, type Company } from './useSearch'
-import { useTypesForms, type TypeForms } from './formularios/useFormularios'
+import { useCompany, type Company, useTypesForms, type TypeForms } from './dashboardService'
 
 // ----------------------------------------------------------------------------------------------------
 interface DashboardProps {

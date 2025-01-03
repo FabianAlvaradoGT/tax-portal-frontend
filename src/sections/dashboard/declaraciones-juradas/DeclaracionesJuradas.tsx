@@ -1,4 +1,4 @@
-import type { Company } from 'src/sections/dashboard/useSearch'
+import type { Company } from 'src/sections/dashboard/dashboardService'
 
 import { toast } from 'sonner'
 import { useMemo, useState, useEffect } from 'react'
@@ -10,11 +10,11 @@ import { ComponentBox } from 'src/components/layout/component-box'
 import { ReactTable } from 'src/components/react-table/ReactTableTemplate'
 
 import { componentBoxStyles } from 'src/sections/dashboard/index'
+import { useDashboard } from 'src/sections/dashboard/dashboardContext'
+import { useDownloadDocument } from 'src/sections/dashboard/formularios/FormulariosService'
 
-import { useDashboard } from '../dashboardContext'
 import { DeclaracionesJuradasColumns } from './Columns'
-import { useDownloadDocument } from '../formularios/useFormularios'
-import { YEARS, useDeclaracionesJuradas } from './useDeclaracionesJuradas'
+import { YEARS, useDeclaracionesJuradas } from './DeclaracionesJuradasService'
 
 // ----------------------------------------------------------------------
 
